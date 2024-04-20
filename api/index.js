@@ -25,6 +25,7 @@ const axios = require("axios");
 
 // Syncing all the models at once.
 conn
+  //sincroniza los modelos definidos creando las tablas en la bd
   .sync({ force: true })
   .then(async () => {
     // cuando se terminan de crear las tablas segun los modelos que definimos
