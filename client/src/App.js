@@ -11,12 +11,12 @@ function App() {
           <nav>
             <ul>
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="/home/0">Home</Link>
               </li>
             </ul>
           </nav>
           <Switch>
-            <Route path="/home">
+            <Route path="/home/:page">
               <Home />
             </Route>
           </Switch>

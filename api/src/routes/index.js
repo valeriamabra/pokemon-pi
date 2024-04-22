@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const getPokemons = require("../controllers/getPokemons");
-const getPokemonById = require("../controllers/getPokemonById");
+const getPokemonByName = require("../controllers/getPokemonByName");
 const createPokemon = require("../controllers/createPokemon");
 const getType = require("../controllers/getType");
 // Importar todos los routers;
@@ -13,7 +13,7 @@ const router = Router();
 router.get("/pokemons", getPokemons);
 
 //idpokemon es un params definido en la ruta de express
-router.get("/pokemons/:idPokemon", getPokemonById);
+router.get("/pokemons/:name", getPokemonByName);
 
 //ruta para crear pokemons
 router.post("/pokemons", createPokemon);

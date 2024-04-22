@@ -8,14 +8,14 @@
     display: block;
     text-decoration: none;
     color: #333;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(8, 7, 7, 0.5);
 }
 
 .image {
 
     width: 100%;
     /* La imagen ocupará todo el ancho del contenedor */
-    max-height: 200px;
+    max-height: 300px;
     /* Altura máxima de la imagen */
     object-fit: cover;
     /* La imagen se ajustará dentro del contenedor manteniendo su relación de aspecto */
@@ -24,17 +24,19 @@
 .name {
     font-size: 20px;
     margin: 10px 0;
+    color: aliceblue;
 }
 
 .types {
     display: flex;
     justify-content: center;
+    color: rgb(2, 2, 2);
 }
 
 .type {
     padding: 5px 10px;
     margin: 0 5px;
-    background-color: #ffcc80;
+    background-color: #f8f6f6;
     /* Color de fondo para los tipos */
     border-radius: 5px;
 }
