@@ -1,0 +1,14 @@
+.title {
+  text-align: center;
+}
+
+html {
+  background: url("./images/background.webp");
+  background-size: cover;
+  /* La imagen de fondo cubrirá todo el contenedor */
+  background-position: center;
+  /* La imagen de fondo se centrará */
+  height: 100vh;
+  /* Establece la altura del contenedor al 100% de la altura de la ventana */
+
+}

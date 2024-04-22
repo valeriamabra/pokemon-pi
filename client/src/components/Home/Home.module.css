@@ -1,0 +1,13 @@
+.title {
+    text-align: center;
+    color: white;
+}
+
+.cardsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+
+}
