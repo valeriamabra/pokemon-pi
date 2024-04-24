@@ -4,6 +4,7 @@ import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchPokemons,
+  fetchTypes,
   searchPokemon,
   setPage,
 } from "../../redux/actions/action";
@@ -47,31 +48,35 @@ const Home = () => {
   // el useSelector es un hook de redux que sirve para traernos
   // una porcion del state
   const pokemons = useSelector((state) => state.pokemons);
+  const types = useSelector((state) => state.types);
   const page = useSelector((state) => state.page);
 
   const [pages, setPages] = useState([]);
   const [order, setOrder] = useState("");
   const [origen, setOrigen] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     let orderedPokemons = [...pokemons];
     if (order !== "") {
       orderedPokemons = orderedPokemons.sort((a, b) => {
-        console.log(a.name, b.name);
         if (order === "A") return a.name > b.name ? 1 : -1;
         return a.name > b.name ? -1 : 1;
       });
     }
 
-    if (origen !== "") {
-      orderedPokemons = orderedPokemons.filter((pokemon) => {
-        if (pokemon.origin !== origen) return false;
-        return true;
-      });
-    }
+    orderedPokemons = orderedPokemons.filter((pokemon) => {
+      if (origen === "") return true;
+      return pokemon.origin === origen;
+    });
+
+    orderedPokemons = orderedPokemons.filter((pokemon) => {
+      if (type === "") return true;
+      return pokemon.types.includes(type);
+    });
 
     setPages(getPages(orderedPokemons));
-  }, [pokemons, order, origen]);
+  }, [pokemons, order, origen, type]);
 
   //es un hook de react q sirve para ejecutar codigo en
   //algun momento del ciclo de vida de un componente de react.
@@ -83,6 +88,7 @@ const Home = () => {
   useEffect(() => {
     // despachamos un action creator
     dispatch(fetchPokemons());
+    dispatch(fetchTypes());
   }, []);
 
   const [name, setName] = useState("");
@@ -107,6 +113,10 @@ const Home = () => {
     setOrigen(evento.target.value);
   };
 
+  const setFiltrarType = (evento) => {
+    setType(evento.target.value);
+  };
+
   return (
     <>
       <h1 className={styles.title}>Home</h1>
@@ -126,6 +136,12 @@ const Home = () => {
           <option value="">Origen</option>
           <option value="API">Api</option>
           <option value="DB">DB</option>
+        </select>
+        <select onChange={setFiltrarType}>
+          <option value="">Type</option>
+          {types.map((type) => {
+            return <option value={type.name}>{type.name}</option>;
+          })}
         </select>
       </div>
       <div className={styles.cardsContainer}>

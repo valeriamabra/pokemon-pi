@@ -1,7 +1,13 @@
-import { SET_PAGE, ADD_POKEMONS, SEARCH_POKEMON } from "../actions/types";
+import {
+  SET_PAGE,
+  ADD_POKEMONS,
+  SEARCH_POKEMON,
+  ADD_TYPES,
+} from "../actions/types";
 
 const initialState = {
   pokemons: [],
+  types: [],
   page: 0,
 };
 
@@ -19,6 +25,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemons: action.payload,
+      };
+
+    case ADD_TYPES:
+      return {
+        ...state,
+        types: action.payload,
       };
 
     case SEARCH_POKEMON:

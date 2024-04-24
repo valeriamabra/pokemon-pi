@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SET_PAGE, ADD_POKEMONS, SEARCH_POKEMON } from "./types";
+import { SET_PAGE, ADD_POKEMONS, SEARCH_POKEMON, ADD_TYPES } from "./types";
 
 //ACTION CREATOR: funciones q se encargan de despachaar acciones hacia el reducer
 export const fetchPokemons = () => {
@@ -10,6 +10,20 @@ export const fetchPokemons = () => {
       // los pokemons obtenidos
       return dispatch({
         type: ADD_POKEMONS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchTypes = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("http://localhost:3001/types");
+      return dispatch({
+        type: ADD_TYPES,
         payload: data,
       });
     } catch (error) {
