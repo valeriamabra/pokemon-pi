@@ -16,7 +16,7 @@ function App() {
             </ul>
           </nav>
           <Switch>
-            <Route path="/home/:page">
+            <Route path="/home">
               <Home />
             </Route>
           </Switch>
