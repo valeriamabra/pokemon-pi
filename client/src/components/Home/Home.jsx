@@ -11,6 +11,8 @@ import {
 const Home = () => {
   const dispatch = useDispatch();
 
+  // el useSelector es un hook de redux que sirve para traernos
+  // una porcion del state
   const pages = useSelector((state) => state.pages);
   const page = useSelector((state) => state.page);
 
@@ -22,6 +24,7 @@ const Home = () => {
   // /!lo usamos para traernos todos los pokemons!/;
 
   useEffect(() => {
+    // despachamos un action creator
     dispatch(fetchPokemons());
   }, []);
 

@@ -6,6 +6,8 @@ export const fetchPokemons = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("http://localhost:3001/pokemons");
+      // despacha la action con type ADD_POKEMONS y en payload le mandamos todos
+      // los pokemons obtenidos
       return dispatch({
         type: ADD_POKEMONS,
         payload: data,
