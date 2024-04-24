@@ -18,3 +18,8 @@
     margin-bottom: 20px;
 
 }
+
+.paginado {
+    display: flex;
+    justify-content: center;
+}
