@@ -3,8 +3,10 @@ import {
   ADD_POKEMONS,
   SEARCH_POKEMON,
   ADD_TYPES,
+  SAVE_POKEMON,
 } from "../actions/types";
 
+// state de redux
 const initialState = {
   pokemons: [],
   types: [],
@@ -44,6 +46,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         page: action.payload,
+      };
+
+    case SAVE_POKEMON:
+      return {
+        ...state,
+        pokemons: [...state.pokemons, action.payload],
       };
 
     default:

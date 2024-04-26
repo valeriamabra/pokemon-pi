@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home/Home";
+import Form from "./components/Form/Form";
 import styles from "./App.module.css";
 
 function App() {
@@ -11,13 +12,19 @@ function App() {
           <nav>
             <ul>
               <li>
-                <Link to="/home/0">Home</Link>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/form">Form</Link>
               </li>
             </ul>
           </nav>
           <Switch>
             <Route path="/home">
               <Home />
+            </Route>
+            <Route path="/form">
+              <Form />
             </Route>
           </Switch>
         </div>

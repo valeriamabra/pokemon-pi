@@ -48,13 +48,16 @@ const Home = () => {
   // el useSelector es un hook de redux que sirve para traernos
   // una porcion del state
   const pokemons = useSelector((state) => state.pokemons);
+  console.log("::: pokenmons", pokemons);
   const types = useSelector((state) => state.types);
   const page = useSelector((state) => state.page);
 
+  // state local
   const [pages, setPages] = useState([]);
   const [order, setOrder] = useState("");
   const [origen, setOrigen] = useState("");
   const [type, setType] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     let orderedPokemons = [...pokemons];
@@ -91,8 +94,6 @@ const Home = () => {
     dispatch(fetchTypes());
   }, []);
 
-  const [name, setName] = useState("");
-
   const onNameChaged = (evento) => {
     setName(evento.target.value);
   };
@@ -127,6 +128,8 @@ const Home = () => {
           value={name}
         ></input>
         <button onClick={onBuscar}>Buscar</button>
+        {/* cuando el usuario cambia el select se ejecuta la funcion setOrdenar (recibida a traves de la
+        prop onChange) */}
         <select onChange={setOrdenar}>
           <option value="">Ordenar</option>
           <option value="A">Ascendente</option>

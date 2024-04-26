@@ -60,7 +60,9 @@ const createPokemon = async (req, res) => {
     });
 
     //respondemos con un código de estado 201 (creado exitosamente) y el nuevo Pokémon en formato JSON.
-    return res.status(201).json(newPokemon);
+    return res
+      .status(201)
+      .json({ ...newPokemon.dataValues, types: foundTypes, origin: "DB" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

@@ -1,5 +1,11 @@
 import axios from "axios";
-import { SET_PAGE, ADD_POKEMONS, SEARCH_POKEMON, ADD_TYPES } from "./types";
+import {
+  SET_PAGE,
+  ADD_POKEMONS,
+  SEARCH_POKEMON,
+  ADD_TYPES,
+  SAVE_POKEMON,
+} from "./types";
 
 //ACTION CREATOR: funciones q se encargan de despachaar acciones hacia el reducer
 export const fetchPokemons = () => {
@@ -40,6 +46,23 @@ export const searchPokemon = (name) => {
       );
       return dispatch({
         type: SEARCH_POKEMON,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const savePokemon = (pokemon) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`http://localhost:3001/pokemons`, {
+        ...pokemon,
+        types: ["steel", "ground"],
+      });
+      return dispatch({
+        type: SAVE_POKEMON,
         payload: data,
       });
     } catch (error) {
