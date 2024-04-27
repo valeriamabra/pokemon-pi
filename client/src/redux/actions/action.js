@@ -57,10 +57,10 @@ export const searchPokemon = (name) => {
 export const savePokemon = (pokemon) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/pokemons`, {
-        ...pokemon,
-        types: ["steel", "ground"],
-      });
+      const { data } = await axios.post(
+        `http://localhost:3001/pokemons`,
+        pokemon
+      );
       return dispatch({
         type: SAVE_POKEMON,
         payload: data,

@@ -1,10 +1,13 @@
 import styles from "./Form.module.css";
-import { useState } from "react";
-import { savePokemon } from "../../redux/actions/action";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { savePokemon, fetchTypes } from "../../redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import Multiselect from "multiselect-react-dropdown";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const types = useSelector((state) => state.types);
+
   //states
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -14,6 +17,11 @@ const Form = () => {
   const [speed, setSpeed] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
+  const [type, setType] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchTypes());
+  }, []);
 
   //handlers
   const onNameChange = (evento) => {
@@ -43,21 +51,26 @@ const Form = () => {
 
   const handleSubmit = (evento) => {
     evento.preventDefault();
-    if (
-      !name ||
-      !image ||
-      !hp ||
-      !attack ||
-      !defense ||
-      !speed ||
-      !height ||
-      !weight
-    )
+    if (!name || !image || !hp || !attack || !defense || type.length < 2)
       alert("algunos datos estan incompletos");
 
     dispatch(
-      savePokemon({ name, image, hp, attack, defense, speed, height, weight })
+      savePokemon({
+        name,
+        image,
+        hp,
+        attack,
+        defense,
+        speed,
+        height,
+        weight,
+        types: type.map((t) => t.name),
+      })
     );
+  };
+  console.log(types);
+  const onTypeChange = (list, item) => {
+    setType(list);
   };
 
   return (
@@ -79,6 +92,13 @@ const Form = () => {
             name="image"
             placeholder="Ingrese la url de la imagen"
           />
+        </div>
+        <div className={styles.inputContainer}>
+          <Multiselect
+            onSelect={onTypeChange}
+            options={types}
+            displayValue="name"
+          ></Multiselect>
         </div>
 
         <div className={styles.inputContainer}>

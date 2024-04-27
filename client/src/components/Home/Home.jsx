@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   fetchPokemons,
   fetchTypes,
@@ -48,7 +49,6 @@ const Home = () => {
   // el useSelector es un hook de redux que sirve para traernos
   // una porcion del state
   const pokemons = useSelector((state) => state.pokemons);
-  console.log("::: pokenmons", pokemons);
   const types = useSelector((state) => state.types);
   const page = useSelector((state) => state.page);
 
@@ -61,10 +61,12 @@ const Home = () => {
 
   useEffect(() => {
     let orderedPokemons = [...pokemons];
+    console.log(orderedPokemons);
     if (order !== "") {
       orderedPokemons = orderedPokemons.sort((a, b) => {
-        if (order === "A") return a.name > b.name ? 1 : -1;
-        return a.name > b.name ? -1 : 1;
+        if (order === "A")
+          return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+        return a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1;
       });
     }
 
@@ -77,6 +79,8 @@ const Home = () => {
       if (type === "") return true;
       return pokemon.types.includes(type);
     });
+
+    console.log(orderedPokemons);
 
     setPages(getPages(orderedPokemons));
   }, [pokemons, order, origen, type]);
@@ -143,7 +147,11 @@ const Home = () => {
         <select onChange={setFiltrarType}>
           <option value="">Type</option>
           {types.map((type) => {
-            return <option value={type.name}>{type.name}</option>;
+            return (
+              <option key={type.id} value={type.name}>
+                {type.name}
+              </option>
+            );
           })}
         </select>
       </div>
@@ -151,7 +159,7 @@ const Home = () => {
         {/* recorro el array pages en el indice(router /0) page */}
         {pages[page]?.map((pokemon) => (
           <Card
-            key={pokemon.id}
+            key={pokemon.id + pokemon.name}
             name={pokemon.name}
             image={pokemon.image}
             types={pokemon.types}

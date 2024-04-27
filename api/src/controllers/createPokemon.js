@@ -13,9 +13,6 @@ const createPokemon = async (req, res) => {
       !hp ||
       !attack ||
       !defense ||
-      !speed ||
-      !height ||
-      !weight ||
       !types ||
       types.length < 2
     ) {
@@ -39,16 +36,18 @@ const createPokemon = async (req, res) => {
     //Aquí estamos creando un nuevo Pokémon en la base de datos utilizando el método findOrCreate de Sequelize.
     // Si ya existe un Pokémon con el mismo id, lo encontrará y lo devolverá.
     //De lo contrario, creará un nuevo Pokémon con los datos proporcionados.
-    const newPokemon = await Pokemon.create({
+    const createPokemon = {
       name,
       image,
       hp,
       attack,
       defense,
-      speed,
-      height,
-      weight,
-    });
+    };
+    if (speed) createPokemon.speed = speed;
+    if (height) createPokemon.height = height;
+    if (weight) createPokemon.weight = weight;
+
+    const newPokemon = await Pokemon.create(createPokemon);
 
     //Después de crear el Pokémon, buscamos todos los tipos que recibimos en la solicitud y
     //los asociamos al Pokémon recién creado utilizando el método setTypes.
@@ -62,7 +61,11 @@ const createPokemon = async (req, res) => {
     //respondemos con un código de estado 201 (creado exitosamente) y el nuevo Pokémon en formato JSON.
     return res
       .status(201)
-      .json({ ...newPokemon.dataValues, types: foundTypes, origin: "DB" });
+      .json({
+        ...newPokemon.dataValues,
+        types: foundTypes.map((t) => t.name),
+        origin: "DB",
+      });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
