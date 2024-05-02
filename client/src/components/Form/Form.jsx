@@ -67,6 +67,8 @@ const Form = () => {
         types: type.map((t) => t.name),
       })
     );
+
+    alert("El pokemon se ha guardado correctamente");
   };
   console.log(types);
   const onTypeChange = (list, item) => {
@@ -75,9 +77,11 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>
-          <label htmlFor="">Nombre</label>
+          <label className={styles.label} htmlFor="">
+            Nombre
+          </label>
           <input
             onChange={onNameChange}
             name="name"
@@ -86,23 +90,33 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Imagen</label>
+          <label className={styles.label} htmlFor="">
+            Imagen
+          </label>
           <input
             onChange={onImageChange}
             name="image"
             placeholder="Ingrese la url de la imagen"
           />
         </div>
-        <div className={styles.inputContainer}>
-          <Multiselect
-            onSelect={onTypeChange}
-            options={types}
-            displayValue="name"
-          ></Multiselect>
+        <div className={styles.multiselectContainer}>
+          <label className={styles.label} htmlFor="">
+            Tipo
+          </label>
+          <div className={styles.multiselect}>
+            <Multiselect
+              onSelect={onTypeChange}
+              options={types}
+              displayValue="name"
+              className={styles.multiselect}
+            ></Multiselect>
+          </div>
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Vida</label>
+          <label className={styles.label} htmlFor="">
+            Vida
+          </label>
           <input
             onChange={onHpChange}
             type="number"
@@ -112,7 +126,9 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Ataque</label>
+          <label className={styles.label} htmlFor="">
+            Ataque
+          </label>
           <input
             onChange={onAttackChange}
             type="number"
@@ -122,7 +138,9 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Defensa</label>
+          <label className={styles.label} htmlFor="">
+            Defensa
+          </label>
           <input
             onChange={onDefenseChange}
             type="number"
@@ -132,7 +150,9 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Velocidad</label>
+          <label className={styles.label} htmlFor="">
+            Velocidad
+          </label>
           <input
             onChange={onSpeedChange}
             type="number"
@@ -142,7 +162,9 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Altura</label>
+          <label className={styles.label} htmlFor="">
+            Altura
+          </label>
           <input
             onChange={onHeightChange}
             type="number"
@@ -152,7 +174,9 @@ const Form = () => {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="">Peso</label>
+          <label className={styles.label} htmlFor="">
+            Peso
+          </label>
           <input
             onChange={onWeightChange}
             type="number"
@@ -161,7 +185,11 @@ const Form = () => {
           />
         </div>
 
-        <button type="submit">Crear pokemon</button>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} type="submit">
+            Crear pokemon
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -55,11 +55,11 @@ export const searchPokemon = (name) => {
   };
 };
 
-export const fetchPokemonById = (id) => {
+export const fetchPokemonById = (origin, id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/pokemons/id/${id}`
+        `http://localhost:3001/pokemons/${origin}/${id}`
       );
       return dispatch({
         type: ADD_POKEMON_BY_ID,

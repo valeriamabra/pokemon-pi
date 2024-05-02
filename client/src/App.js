@@ -11,12 +11,16 @@ function App() {
       <Router>
         <div>
           <nav>
-            <ul>
-              <li>
-                <Link to="/home">Home</Link>
+            <ul className={styles.navUl}>
+              <li className={styles.navLi}>
+                <Link className={styles.navLink} to="/home">
+                  Pokemons
+                </Link>
               </li>
-              <li>
-                <Link to="/form">Form</Link>
+              <li className={styles.navLi}>
+                <Link className={styles.navLink} to="/form">
+                  Crear
+                </Link>
               </li>
             </ul>
           </nav>
@@ -27,7 +31,7 @@ function App() {
             <Route path="/form">
               <Form />
             </Route>
-            <Route path="/detail/:id">
+            <Route path="/detail/:origin/:id">
               <Detail />
             </Route>
           </Switch>

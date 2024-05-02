@@ -1,5 +1,35 @@
 .title {
   text-align: center;
+  color: rgb(251, 244, 244);
+  /* -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: black; */
+  text-shadow:
+    3px 3px 0 #000,
+    -3px 3px 0 #000,
+    -3px -3px 0 #000,
+    3px -3px 0 #000;
+  font-size: 55px;
+}
+
+.navUl {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+
+.navLi {
+  display: list-item;
+  padding: 5px 10px;
+  color: white;
+  margin: 0 3px;
+  background-color: #ff9100;
+}
+
+.navLink {
+  text-decoration: none;
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
 }
 
 html {

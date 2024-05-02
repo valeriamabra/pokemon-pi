@@ -1,14 +1,44 @@
 .container {
-    display: flex;
-    justify-content: center;
+    font-size: 25px;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    width: 600px;
+    padding: 40px;
+    text-decoration: none;
+    color: #333;
+    background-color: rgba(8, 7, 7, 0.5);
 }
 
-.formContainer {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+input {
+    width: 400px;
 }
 
 .inputContainer {
+    display: flex;
+    color: white;
     margin-bottom: 25px;
+}
+
+.multiselectContainer {
+    display: inline-flex;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.label {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.buttonContainer {
+    text-align: center;
+}
+
+.button {
+    width: 300px;
+    padding: 20px;
+}
+
+.multiselect {
+    color: black;
 }

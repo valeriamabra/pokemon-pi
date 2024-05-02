@@ -2,9 +2,9 @@ import { Link } from "react-router-dom"; // Importar Link de react-router-dom si
 
 import styles from "./Card.module.css";
 
-const Card = ({ id, name, image, types }) => {
+const Card = ({ id, origin, name, image, types }) => {
   return (
-    <Link to={`/detail/${id}`}>
+    <Link to={`/detail/${origin}/${id}`}>
       <div className={styles.container}>
         <img className={styles.image} src={image} alt={name} />
         <h2 className={styles.name}>{name}</h2>

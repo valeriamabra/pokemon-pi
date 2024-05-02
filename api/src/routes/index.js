@@ -15,7 +15,7 @@ router.get("/pokemons", getPokemons);
 
 router.get("/pokemons/:name", getPokemonByName);
 
-router.get("/pokemons/id/:id", getPokemonById);
+router.get("/pokemons/:origin/:id", getPokemonById);
 
 //ruta para crear pokemons
 router.post("/pokemons", createPokemon);

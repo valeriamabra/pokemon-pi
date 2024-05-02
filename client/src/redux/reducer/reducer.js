@@ -12,7 +12,7 @@ const initialState = {
   pokemons: [],
   types: [],
   page: 0,
-  detail: [],
+  detail: null,
 };
 
 // el reducer es el que efectivamente va a modificar el estado

@@ -2,24 +2,29 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPokemonById } from "../../redux/actions/action";
 import styles from "../Detail/Detail.module.css";
-import Card from "../Card/Card";
 
 import { useEffect } from "react";
 const Detail = () => {
-  let { id } = useParams();
+  let { id, origin } = useParams();
+
   const pokemon = useSelector((state) => state.detail);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchPokemonById(id));
+    dispatch(fetchPokemonById(origin, id));
   }, [dispatch, fetchPokemonById]);
 
   return (
-    <>
+    <div className={styles.container}>
       {pokemon && (
-        <div className={styles.container}>
+        <>
           <h1>{pokemon.name}</h1>
 
-          <img src={pokemon.image} alt={pokemon.name} />
+          <img
+            className={styles.image}
+            src={pokemon.image}
+            alt={pokemon.name}
+          />
 
           <div className={styles.datasContainer}>
             <div className={styles.dataContainer}>
@@ -42,21 +47,21 @@ const Detail = () => {
               <span>{pokemon.attack}</span>
             </div>
 
-            {pokemon.speed && (
+            {!!pokemon.speed && (
               <div className={styles.dataContainer}>
                 <label>VELOCIDAD: </label>
                 <span>{pokemon.speed}</span>
               </div>
             )}
 
-            {pokemon.height && (
+            {!!pokemon.height && (
               <div className={styles.dataContainer}>
                 <label>ALTURA: </label>
                 <span>{pokemon.height}</span>
               </div>
             )}
 
-            {pokemon.weight && (
+            {!!pokemon.weight && (
               <div className={styles.dataContainer}>
                 <label>PESO: </label>
                 <span>{pokemon.weight}</span>
@@ -72,9 +77,11 @@ const Detail = () => {
                 ))}
             </div>
           </div>
-        </div>
+        </>
       )}
-    </>
+
+      {!pokemon && <h1>Cargando...</h1>}
+    </div>
   );
 };
 

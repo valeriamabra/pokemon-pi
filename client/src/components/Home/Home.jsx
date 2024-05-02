@@ -123,7 +123,6 @@ const Home = () => {
 
   return (
     <>
-      <h1 className={styles.title}>Home</h1>
       <div className={styles.searchBarContainer}>
         <input
           onChange={onNameChaged}
@@ -163,6 +162,7 @@ const Home = () => {
             name={pokemon.name}
             image={pokemon.image}
             types={pokemon.types}
+            origin={pokemon.origin}
           />
         ))}
       </div>
