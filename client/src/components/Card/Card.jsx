@@ -4,19 +4,19 @@ import styles from "./Card.module.css";
 
 const Card = ({ id, name, image, types }) => {
   return (
-    // <Link to={`/pokemon/${id}`}>
-    <div className={styles.container}>
-      <img className={styles.image} src={image} alt={name} />
-      <h2 className={styles.name}>{name}</h2>
-      <div className={styles.types}>
-        {types.map((type, index) => (
-          <span key={index} className={styles.type}>
-            {type}
-          </span>
-        ))}
+    <Link to={`/detail/${id}`}>
+      <div className={styles.container}>
+        <img className={styles.image} src={image} alt={name} />
+        <h2 className={styles.name}>{name}</h2>
+        <div className={styles.types}>
+          {types.map((type, index) => (
+            <span key={index} className={styles.type}>
+              {type}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
-    // </Link>
+    </Link>
   );
 };
 

@@ -61,7 +61,6 @@ const Home = () => {
 
   useEffect(() => {
     let orderedPokemons = [...pokemons];
-    console.log(orderedPokemons);
     if (order !== "") {
       orderedPokemons = orderedPokemons.sort((a, b) => {
         if (order === "A")
@@ -159,6 +158,7 @@ const Home = () => {
         {/* recorro el array pages en el indice(router /0) page */}
         {pages[page]?.map((pokemon) => (
           <Card
+            id={pokemon.id}
             key={pokemon.id + pokemon.name}
             name={pokemon.name}
             image={pokemon.image}

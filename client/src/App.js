@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Form from "./components/Form/Form";
 import styles from "./App.module.css";
+import Detail from "./components/Detail/Detail";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
             </Route>
             <Route path="/form">
               <Form />
+            </Route>
+            <Route path="/detail/:id">
+              <Detail />
             </Route>
           </Switch>
         </div>

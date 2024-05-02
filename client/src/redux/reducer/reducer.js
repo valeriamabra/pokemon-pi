@@ -4,6 +4,7 @@ import {
   SEARCH_POKEMON,
   ADD_TYPES,
   SAVE_POKEMON,
+  ADD_POKEMON_BY_ID,
 } from "../actions/types";
 
 // state de redux
@@ -11,6 +12,7 @@ const initialState = {
   pokemons: [],
   types: [],
   page: 0,
+  detail: [],
 };
 
 // el reducer es el que efectivamente va a modificar el estado
@@ -52,6 +54,11 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemons: [...state.pokemons, action.payload],
+      };
+    case ADD_POKEMON_BY_ID:
+      return {
+        ...state,
+        detail: action.payload,
       };
 
     default:

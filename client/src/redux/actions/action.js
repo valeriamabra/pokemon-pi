@@ -5,6 +5,7 @@ import {
   SEARCH_POKEMON,
   ADD_TYPES,
   SAVE_POKEMON,
+  ADD_POKEMON_BY_ID,
 } from "./types";
 
 //ACTION CREATOR: funciones q se encargan de despachaar acciones hacia el reducer
@@ -46,6 +47,22 @@ export const searchPokemon = (name) => {
       );
       return dispatch({
         type: SEARCH_POKEMON,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchPokemonById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/pokemons/id/${id}`
+      );
+      return dispatch({
+        type: ADD_POKEMON_BY_ID,
         payload: data,
       });
     } catch (error) {
