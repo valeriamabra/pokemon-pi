@@ -53,7 +53,6 @@ export const rootReducer = (state = initialState, action) => {
     case SAVE_POKEMON:
       return {
         ...state,
-        pokemons: [...state.pokemons, action.payload],
       };
     case ADD_POKEMON_BY_ID:
       return {

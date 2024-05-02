@@ -130,19 +130,21 @@ const Home = () => {
           value={name}
         ></input>
         <button onClick={onBuscar}>Buscar</button>
-        {/* cuando el usuario cambia el select se ejecuta la funcion setOrdenar (recibida a traves de la
+      </div>
+      {/* cuando el usuario cambia el select se ejecuta la funcion setOrdenar (recibida a traves de la
         prop onChange) */}
-        <select onChange={setOrdenar}>
+      <div className={styles.searchBarContainer}>
+        <select className={styles.filterSelect} onChange={setOrdenar}>
           <option value="">Ordenar</option>
           <option value="A">Ascendente</option>
           <option value="D">Descendente</option>
         </select>
-        <select onChange={setFiltrarOrigen}>
+        <select className={styles.filterSelect} onChange={setFiltrarOrigen}>
           <option value="">Origen</option>
           <option value="API">Api</option>
           <option value="DB">DB</option>
         </select>
-        <select onChange={setFiltrarType}>
+        <select className={styles.filterSelect} onChange={setFiltrarType}>
           <option value="">Type</option>
           {types.map((type) => {
             return (
@@ -153,6 +155,7 @@ const Home = () => {
           })}
         </select>
       </div>
+
       <div className={styles.cardsContainer}>
         {/* recorro el array pages en el indice(router /0) page */}
         {pages[page]?.map((pokemon) => (

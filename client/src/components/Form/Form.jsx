@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { savePokemon, fetchTypes } from "../../redux/actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import Multiselect from "multiselect-react-dropdown";
+import { useHistory } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
+
+  let history = useHistory();
 
   //states
   const [name, setName] = useState("");
@@ -51,8 +54,10 @@ const Form = () => {
 
   const handleSubmit = (evento) => {
     evento.preventDefault();
-    if (!name || !image || !hp || !attack || !defense || type.length < 2)
+    if (!name || !image || !hp || !attack || !defense || type.length < 2) {
       alert("algunos datos estan incompletos");
+      return;
+    }
 
     dispatch(
       savePokemon({
@@ -69,6 +74,8 @@ const Form = () => {
     );
 
     alert("El pokemon se ha guardado correctamente");
+
+    history.push("/home");
   };
   console.log(types);
   const onTypeChange = (list, item) => {

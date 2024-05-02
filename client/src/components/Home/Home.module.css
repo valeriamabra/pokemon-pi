@@ -12,6 +12,12 @@
 
 }
 
+.filterSelect {
+    margin-right: 15px;
+    height: 30px;
+    padding: 3px
+}
+
 .searchBarContainer {
     display: flex;
     justify-content: center;
