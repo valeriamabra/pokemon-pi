@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Home from "./components/Home/Home";
+import Pokemons from "./components/Pokemons/Pokemons";
 import Form from "./components/Form/Form";
-import styles from "./App.module.css";
 import Detail from "./components/Detail/Detail";
+import Home from "./components/Home/Home";
+
+import styles from "./App.module.css";
 
 function App() {
   return (
@@ -13,7 +15,12 @@ function App() {
           <nav>
             <ul className={styles.navUl}>
               <li className={styles.navLi}>
-                <Link className={styles.navLink} to="/home">
+                <Link className={styles.navLink} to="/">
+                  Home
+                </Link>
+              </li>
+              <li className={styles.navLi}>
+                <Link className={styles.navLink} to="/pokemons">
                   Pokemons
                 </Link>
               </li>
@@ -25,14 +32,17 @@ function App() {
             </ul>
           </nav>
           <Switch>
-            <Route path="/home">
-              <Home />
+            <Route path="/pokemons">
+              <Pokemons />
             </Route>
             <Route path="/form">
               <Form />
             </Route>
             <Route path="/detail/:origin/:id">
               <Detail />
+            </Route>
+            <Route path="/">
+              <Home />
             </Route>
           </Switch>
         </div>
