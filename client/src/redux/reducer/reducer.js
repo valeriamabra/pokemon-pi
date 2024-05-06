@@ -15,15 +15,13 @@ const initialState = {
   detail: null,
 };
 
-// el reducer es el que efectivamente va a modificar el estado
-// conforme lleguen las actions. Cuando desde alguna parte del app
-// despachamos una action (desde los actions creatos), esa action
-// va a pasar por el reducer
+// el reducer es el q se encarga de recibir las actions
+// procesarlas y modificar el estado en base a estas.
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     // cuando la action entra al switch vamos a definir que hacer
     // segun el type de la action, en este caso el ADD_POKEMONS va
-    // a modificar el pokemons del estado guardando en el el action.payload
+    // a modificar el pokemons del estado con el action.payload
     // recibido
     case ADD_POKEMONS:
       return {

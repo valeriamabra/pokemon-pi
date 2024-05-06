@@ -12,9 +12,10 @@ import {
 export const fetchPokemons = () => {
   return async (dispatch) => {
     try {
+      //la action creator llama al back y se trae la data
       const { data } = await axios.get("http://localhost:3001/pokemons");
-      // despacha la action con type ADD_POKEMONS y en payload le mandamos todos
-      // los pokemons obtenidos
+      // cuando llega la data despacha la action con type ADD_POKEMONS
+      // y en payload le mandamos todos los pokemons obtenidos
       return dispatch({
         type: ADD_POKEMONS,
         payload: data,
@@ -50,7 +51,7 @@ export const searchPokemon = (name) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      alert("pokemon no encontrado");
     }
   };
 };
