@@ -4,7 +4,7 @@ const { Pokemon, Type } = require("../db.js");
 const { parsePokemonAPI, parsePokemonsDB } = require("../utils.js");
 
 const getPokemons = async (req, res) => {
-  let url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=25`;
+  let url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=40`;
 
   const search = await axios(url);
 

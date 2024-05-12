@@ -8,14 +8,11 @@ import {
   ADD_POKEMON_BY_ID,
 } from "./types";
 
-//ACTION CREATOR: funciones q se encargan de despachaar acciones hacia el reducer
 export const fetchPokemons = () => {
   return async (dispatch) => {
     try {
-      //la action creator llama al back y se trae la data
       const { data } = await axios.get("http://localhost:3001/pokemons");
-      // cuando llega la data despacha la action con type ADD_POKEMONS
-      // y en payload le mandamos todos los pokemons obtenidos
+
       return dispatch({
         type: ADD_POKEMONS,
         payload: data,
@@ -42,17 +39,17 @@ export const fetchTypes = () => {
 
 export const searchPokemon = (name) => {
   return async (dispatch) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/pokemons/${name}`
-      );
-      return dispatch({
-        type: SEARCH_POKEMON,
-        payload: data,
-      });
-    } catch (error) {
-      alert("pokemon no encontrado");
+    const { data } = await axios.get(`http://localhost:3001/pokemons/${name}`);
+
+    if (data.length === 0) {
+      alert("Pokemon no encontrado");
+      return;
     }
+
+    return dispatch({
+      type: SEARCH_POKEMON,
+      payload: data,
+    });
   };
 };
 

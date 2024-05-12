@@ -24,11 +24,7 @@ const getPokemonByName = async (req, res) => {
     results.push(...pokemonDB);
   }
 
-  if (results.length === 0) {
-    res.status(404).send("Not found");
-  } else {
-    res.json(results);
-  }
+  res.json(results);
 };
 
 module.exports = getPokemonByName;

@@ -6,17 +6,53 @@
     padding: 40px;
     text-decoration: none;
     color: #333;
-    background-color: rgba(8, 7, 7, 0.5);
+    background-color: rgba(8, 7, 7, 0.8);
 }
 
-input {
+.input {
     width: 400px;
+}
+
+.inputError {
+    flex: 1;
+    color: red;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-left: 150px;
+}
+
+.labelCheckbox {
+    color: white;
+    margin-right: 10px;
+    font-size: 20px;
 }
 
 .inputContainer {
     display: flex;
+    flex-direction: column;
     color: white;
     margin-bottom: 25px;
+}
+
+.typesContainer {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.typesCheckboxesContainer {
+    flex-direction: row;
+}
+
+.labelCheckbox {
+    font-weight: 200;
+}
+
+.spanCheckbox {
+    display: inline-block;
+    width: 120px;
 }
 
 .multiselectContainer {
@@ -26,7 +62,8 @@ input {
 }
 
 .label {
-    width: 150px;
+    display: inline-block;
+    width: 140px;
     margin-right: 10px;
 }
 
@@ -37,6 +74,8 @@ input {
 .button {
     width: 300px;
     padding: 20px;
+    color: white;
+    background-color: #bc0707;
 }
 
 .multiselect {

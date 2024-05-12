@@ -9,15 +9,9 @@ import {
   searchPokemon,
   setPage,
 } from "../../redux/actions/action";
-//ARRAY DE ARRAYS
-// [
-// 	[
-// 		{ name: "pepe", ... },
-// 	],
-// ]
+
 const getPages = (data) => {
-  // PAGINADO
-  //ARRAY DE ARRAYS
+  // ARRAY DE ARRAYS
   // [
   // 	[
   // 		{ name: "pepe", ... },
@@ -51,29 +45,17 @@ const getPages = (data) => {
 const Pokemons = () => {
   const dispatch = useDispatch();
 
-  // el useSelector es un hook de redux que sirve para traer
-  // una porcion del state a nuestro componente
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
   const page = useSelector((state) => state.page);
 
-  // state local react
-  //crear estados dentro del componente local
-  const [pages, setPages] = useState([]); //aca se guardan los pokemons paginados
-  const [order, setOrder] = useState(""); //filtro de ordenar
-  const [origen, setOrigen] = useState(""); //filtro de origen
-  const [type, setType] = useState(""); //filtro de tipo
-  const [name, setName] = useState(""); //el buscar x nombre
-
-  //es un hook de react q sirve para ejecutar codigo en
-  //algun momento del ciclo de vida de un componente de react.
-  //este se ejecuta cada vez q cambia el valor de alguna depencia pasada
-  //a traves del array de dependencias. si el array de dependencia esta
-  //vacio se eject por unica vez cuando el comp es montado
-  // /!lo usamos para traernos todos los pokemons!/;
+  const [pages, setPages] = useState([]);
+  const [order, setOrder] = useState("");
+  const [origen, setOrigen] = useState("");
+  const [type, setType] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
-    // despachamos un action creator
     dispatch(fetchPokemons());
     dispatch(fetchTypes());
   }, []);
@@ -102,7 +84,7 @@ const Pokemons = () => {
     }
     const paginado = getPages(orderedPokemons);
     setPages(paginado);
-  }, [pokemons, order, origen, type]); //
+  }, [pokemons, order, origen, type]);
 
   const onBuscar = async () => {
     if (name) {
@@ -112,20 +94,21 @@ const Pokemons = () => {
     dispatch(fetchPokemons());
   };
 
-  //estas funciones se encargan de ir modificando el estado
-  //conforme el usuario va cambiando el select
   const onNameChaged = (evento) => {
     setName(evento.target.value);
   };
+
   const setOrdenar = (evento) => {
     setOrder(evento.target.value);
   };
 
   const setFiltrarOrigen = (evento) => {
+    dispatch(setPage(0));
     setOrigen(evento.target.value);
   };
 
   const setFiltrarType = (evento) => {
+    dispatch(setPage(0));
     setType(evento.target.value);
   };
 
@@ -152,6 +135,7 @@ const Pokemons = () => {
         </select>
         <select className={styles.filterSelect} onChange={setFiltrarType}>
           <option value="">Type</option>
+          {/* renderizo los tipos */}
           {types.map((type) => {
             return (
               <option key={type.id} value={type.name}>
@@ -163,7 +147,7 @@ const Pokemons = () => {
       </div>
 
       <div className={styles.cardsContainer}>
-        {/* recorro el array pages en el indice(router /0) page */}
+        {/* recorro la pag seleccionada x el usuario y muestro los pokemons de dicha pagina*/}
         {pages[page]?.map((pokemon) => (
           <Card
             id={pokemon.id}
@@ -177,12 +161,16 @@ const Pokemons = () => {
       </div>
       <div className={styles.paginado}>
         {
-          //map: por cada elemt del array ejecuta la funcion q le pasamos
-          //recorro las pages y por cada una armo un boton
-          pages?.map((page, index) => {
+          // recorro un array de paginas
+          //por cada pag renderizo un boton
+          pages?.map((_, index) => {
             return (
               <button
-                className={styles.paginadoButton}
+                className={
+                  page === index
+                    ? styles.paginadoButtonPressed
+                    : styles.paginadoButton
+                }
                 key={index}
                 onClick={() => {
                   dispatch(setPage(index));

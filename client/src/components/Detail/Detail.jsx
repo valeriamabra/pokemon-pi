@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPokemonById } from "../../redux/actions/action";
 import styles from "../Detail/Detail.module.css";
-
 import { useEffect } from "react";
+
 const Detail = () => {
   let { id, origin } = useParams();
 
@@ -12,7 +12,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(fetchPokemonById(origin, id));
-  }, [dispatch, fetchPokemonById]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -73,7 +73,7 @@ const Detail = () => {
               {pokemon &&
                 pokemon.types &&
                 pokemon.types.map((type, index) => (
-                  <span key={index}>{type}</span>
+                  <span key={index}>{type} </span>
                 ))}
             </div>
           </div>

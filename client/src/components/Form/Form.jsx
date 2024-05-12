@@ -2,61 +2,225 @@ import styles from "./Form.module.css";
 import { useEffect, useState } from "react";
 import { savePokemon, fetchTypes } from "../../redux/actions/action";
 import { useDispatch, useSelector } from "react-redux";
-import Multiselect from "multiselect-react-dropdown";
 import { useHistory } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
+
   const types = useSelector((state) => state.types);
 
   let history = useHistory();
 
-  //states
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+
   const [image, setImage] = useState("");
+  const [imageError, setImageError] = useState("");
+
   const [hp, setHp] = useState("");
+  const [hpError, setHpError] = useState("");
+
   const [attack, setAttack] = useState("");
+  const [attackError, setAttackError] = useState("");
+
   const [defense, setDefense] = useState("");
+  const [defenseError, setDefenseError] = useState("");
+
   const [speed, setSpeed] = useState("");
+  const [speedError, setSpeedError] = useState("");
+
   const [height, setHeight] = useState("");
+  const [heightError, setHeightError] = useState("");
+
   const [weight, setWeight] = useState("");
-  const [type, setType] = useState([]);
+  const [weightError, setWeightError] = useState("");
+
+  const [checkedTypes, setCheckedTypes] = useState({});
+  const [checkedTypesError, setCheckedTypesError] = useState("");
 
   useEffect(() => {
     dispatch(fetchTypes());
   }, []);
 
-  //handlers
   const onNameChange = (evento) => {
-    setName(evento.target.value);
+    const newName = evento.target.value;
+    let error = ""; //esta vacio xq asumimos q no hay error
+
+    if (newName.length > 0) {
+      if (newName.length < 5 || newName.length > 20) {
+        error = "El nombre debe tener entre 5 y 20 caracteres";
+      }
+
+      if (newName.match(/\d+/g)) {
+        error = "El nombre no debe contener numeros";
+      }
+
+      if (newName.match(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/)) {
+        error = "El nombre no debe contener símbolos";
+      }
+    }
+    setNameError(error); //guarda el error q tiene el nombre
+    setName(newName);
   };
+
   const onImageChange = (evento) => {
-    setImage(evento.target.value);
+    const newImage = evento.target.value;
+    let error = "";
+    if (newImage.length > 0) {
+      if (!newImage.match(/(https?:\/\/.*\.(?:png|jpg))/i)) {
+        error = "Debe ser una url a un png o jpg";
+      }
+    }
+
+    setImageError(error);
+    setImage(newImage);
   };
+
   const onHpChange = (evento) => {
-    setHp(evento.target.value);
+    const newHp = evento.target.value;
+    let error = "";
+
+    if (newHp < 0) {
+      error = "Las vidas no pueden ser negativas";
+    }
+
+    setHpError(error);
+    setHp(newHp);
   };
+
   const onAttackChange = (evento) => {
-    setAttack(evento.target.value);
+    const newAttack = evento.target.value;
+    let error = "";
+
+    if (newAttack < 0) {
+      error = "Los ataques no pueden ser negativos";
+    }
+
+    setAttackError(error);
+    setAttack(newAttack);
   };
+
   const onDefenseChange = (evento) => {
-    setDefense(evento.target.value);
+    const newDefense = evento.target.value;
+    let error = "";
+
+    if (newDefense < 0) {
+      error = "Las defensas no pueden ser negativas";
+    }
+
+    setDefenseError(error);
+    setDefense(newDefense);
   };
+
   const onSpeedChange = (evento) => {
-    setSpeed(evento.target.value);
+    const newSpeed = evento.target.value;
+    let error = "";
+
+    if (newSpeed < 0) {
+      error = "La velocidad no puede ser negativa";
+    }
+
+    setSpeedError(error);
+    setSpeed(newSpeed);
   };
+
   const onHeightChange = (evento) => {
-    setHeight(evento.target.value);
+    const newHeight = evento.target.value;
+    let error = "";
+
+    if (newHeight < 0) {
+      error = "La altura no puede ser negativa";
+    }
+
+    setHeightError(error);
+    setHeight(newHeight);
   };
+
   const onWeightChange = (evento) => {
-    setWeight(evento.target.value);
+    const newWeight = evento.target.value;
+    let error = "";
+
+    if (newWeight < 0) {
+      error = "El peso no puede ser negativo";
+    }
+
+    setWeightError(error);
+    setWeight(newWeight);
   };
+
+  const onCheckTypeChange = (event) => {
+    setCheckedTypes({
+      ...checkedTypes,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  useEffect(() => {
+    const checkeds = Object.entries(checkedTypes).filter(
+      (item) => item[1]
+    ).length;
+    if (checkeds !== 0 && (checkeds > 2 || checkeds < 1)) {
+      setCheckedTypesError("El pokemon debe tener 1 o 2 types");
+    } else {
+      setCheckedTypesError("");
+    }
+  }, [checkedTypes]);
 
   const handleSubmit = (evento) => {
     evento.preventDefault();
-    if (!name || !image || !hp || !attack || !defense || type.length < 2) {
-      alert("algunos datos estan incompletos");
+
+    let error = false;
+
+    if (
+      nameError ||
+      imageError ||
+      hpError ||
+      attackError ||
+      defenseError ||
+      weightError ||
+      heightError ||
+      speedError ||
+      checkedTypesError
+    ) {
+      error = true;
+    }
+
+    if (!name) {
+      error = true;
+      setNameError("El nombre es obligatorio");
+    }
+    if (!image) {
+      error = true;
+      setImageError("La imagen es obligatoria");
+    }
+    if (!hp) {
+      error = true;
+      setHpError("Las vidas son obligatorias");
+    }
+    if (!attack) {
+      error = true;
+      setAttackError("Los ataques son obligatorios");
+    }
+    if (!defense) {
+      error = true;
+      setDefenseError("Las defensas son obligatorias");
+    }
+
+    const checkeds = Object.entries(checkedTypes).filter(
+      (item) => item[1]
+    ).length;
+    if (checkeds === 0) {
+      error = true;
+      setCheckedTypesError("Debe elegir al menos un tipo");
+    }
+
+    if (error) {
       return;
+    }
+
+    const typesToSend = [];
+    for (const [typeName, checked] of Object.entries(checkedTypes)) {
+      if (checked) typesToSend.push(typeName);
     }
 
     dispatch(
@@ -69,127 +233,164 @@ const Form = () => {
         speed,
         height,
         weight,
-        types: type.map((t) => t.name),
+        types: typesToSend,
       })
     );
 
     alert("El pokemon se ha guardado correctamente");
 
-    history.push("/home");
-  };
-  console.log(types);
-  const onTypeChange = (list, item) => {
-    setType(list);
+    history.push("/pokemons");
   };
 
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Nombre
-          </label>
-          <input
-            onChange={onNameChange}
-            name="name"
-            placeholder="Ingrese el nombre"
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Imagen
-          </label>
-          <input
-            onChange={onImageChange}
-            name="image"
-            placeholder="Ingrese la url de la imagen"
-          />
-        </div>
-        <div className={styles.multiselectContainer}>
-          <label className={styles.label} htmlFor="">
-            Tipo
-          </label>
-          <div className={styles.multiselect}>
-            <Multiselect
-              onSelect={onTypeChange}
-              options={types}
-              displayValue="name"
-              className={styles.multiselect}
-            ></Multiselect>
+          <div>
+            <label className={styles.label} htmlFor="">
+              Nombre
+            </label>
+            <input
+              onChange={onNameChange}
+              name="name"
+              placeholder="Ingrese el nombre"
+              className={styles.input}
+            />
           </div>
+          {nameError && <p className={styles.inputError}>{nameError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Vida
-          </label>
-          <input
-            onChange={onHpChange}
-            type="number"
-            name="hp"
-            placeholder="Ingrese sus vidas"
-          />
+          <div>
+            <label className={styles.label} htmlFor="">
+              Imagen
+            </label>
+            <input
+              onChange={onImageChange}
+              name="image"
+              placeholder="Ingrese la url de la imagen"
+              className={styles.input}
+            />
+          </div>
+          {imageError && <p className={styles.inputError}>{imageError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Ataque
-          </label>
-          <input
-            onChange={onAttackChange}
-            type="number"
-            name="attack"
-            placeholder="Ingrese su ataque"
-          />
+          <div>
+            <label className={styles.label} htmlFor="">
+              Vida
+            </label>
+            <input
+              onChange={onHpChange}
+              type="number"
+              name="hp"
+              placeholder="Ingrese sus vidas"
+              className={styles.input}
+            />
+          </div>
+          {hpError && <p className={styles.inputError}>{hpError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Defensa
-          </label>
-          <input
-            onChange={onDefenseChange}
-            type="number"
-            name="defense"
-            placeholder="Ingrese su defensa"
-          />
+          <div>
+            <label className={styles.label} htmlFor="">
+              Ataque
+            </label>
+            <input
+              onChange={onAttackChange}
+              type="number"
+              name="attack"
+              placeholder="Ingrese su ataque"
+              className={styles.input}
+            />
+          </div>
+          {attackError && <p className={styles.inputError}>{attackError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Velocidad
-          </label>
-          <input
-            onChange={onSpeedChange}
-            type="number"
-            name="speed"
-            placeholder="Ingrese la velocidad"
-          />
+          <div>
+            <label className={styles.label} htmlFor="">
+              Defensa
+            </label>
+            <input
+              onChange={onDefenseChange}
+              type="number"
+              name="defense"
+              placeholder="Ingrese su defensa"
+              className={styles.input}
+            />
+          </div>
+          {defenseError && <p className={styles.inputError}>{defenseError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
-          <label className={styles.label} htmlFor="">
-            Altura
-          </label>
-          <input
-            onChange={onHeightChange}
-            type="number"
-            name="height"
-            placeholder="Ingrese la altura"
-          />
+          <div>
+            <label className={styles.label} htmlFor="">
+              Velocidad
+            </label>
+            <input
+              onChange={onSpeedChange}
+              type="number"
+              name="speed"
+              placeholder="Ingrese la velocidad"
+              className={styles.input}
+            />
+          </div>
+          {speedError && <p className={styles.inputError}>{speedError}</p>}
         </div>
 
         <div className={styles.inputContainer}>
+          <div>
+            <label className={styles.label} htmlFor="">
+              Altura
+            </label>
+            <input
+              onChange={onHeightChange}
+              type="number"
+              name="height"
+              placeholder="Ingrese la altura"
+              className={styles.input}
+            />
+          </div>
+          {heightError && <p className={styles.inputError}>{heightError}</p>}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <div>
+            <label className={styles.label} htmlFor="">
+              Peso
+            </label>
+            <input
+              onChange={onWeightChange}
+              type="number"
+              name="weight"
+              placeholder="Ingrese el peso"
+              className={styles.input}
+            />
+          </div>
+          {weightError && <p className={styles.inputError}>{weightError}</p>}
+        </div>
+
+        <div className={styles.typesContainer}>
           <label className={styles.label} htmlFor="">
-            Peso
+            Tipos
           </label>
-          <input
-            onChange={onWeightChange}
-            type="number"
-            name="weight"
-            placeholder="Ingrese el peso"
-          />
+          <div className={styles.typesCheckboxesContainer}>
+            {types?.map((item) => (
+              <span key={item.name} className={styles.spanCheckbox}>
+                <input
+                  type="checkbox"
+                  name={item.name}
+                  checked={!!checkedTypes[item.name]}
+                  onChange={onCheckTypeChange}
+                />
+                <label className={styles.labelCheckbox}>{item?.name}</label>
+              </span>
+            ))}
+            {checkedTypesError && (
+              <p className={styles.inputError}>{checkedTypesError}</p>
+            )}
+          </div>
         </div>
 
         <div className={styles.buttonContainer}>
