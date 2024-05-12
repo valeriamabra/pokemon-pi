@@ -14,7 +14,8 @@ const createPokemon = async (req, res) => {
       !attack ||
       !defense ||
       !types ||
-      types.length < 2
+      types.length === 0 ||
+      types.length > 2
     ) {
       return res.status(400).json({ error: "Faltan datos" });
     }
@@ -59,13 +60,11 @@ const createPokemon = async (req, res) => {
     });
 
     //respondemos con un código de estado 201 (creado exitosamente) y el nuevo Pokémon en formato JSON.
-    return res
-      .status(201)
-      .json({
-        ...newPokemon.dataValues,
-        types: foundTypes.map((t) => t.name),
-        origin: "DB",
-      });
+    return res.status(201).json({
+      ...newPokemon.dataValues,
+      types: foundTypes.map((t) => t.name),
+      origin: "DB",
+    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

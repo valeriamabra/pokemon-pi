@@ -6,25 +6,28 @@ import { useHistory } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const types = useSelector((state) => state.types);
 
-  let history = useHistory();
-
   const [name, setName] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [nameError, setNameError] = useState("El nombre es obligatorio");
 
   const [image, setImage] = useState("");
-  const [imageError, setImageError] = useState("");
+  const [imageError, setImageError] = useState("La imagen es obligatoria");
 
   const [hp, setHp] = useState("");
-  const [hpError, setHpError] = useState("");
+  const [hpError, setHpError] = useState("Las vidas son obligatorias");
 
   const [attack, setAttack] = useState("");
-  const [attackError, setAttackError] = useState("");
+  const [attackError, setAttackError] = useState(
+    "Los ataques son obligatorios"
+  );
 
   const [defense, setDefense] = useState("");
-  const [defenseError, setDefenseError] = useState("");
+  const [defenseError, setDefenseError] = useState(
+    "Las defensas son obligatorias"
+  );
 
   const [speed, setSpeed] = useState("");
   const [speedError, setSpeedError] = useState("");
@@ -36,7 +39,9 @@ const Form = () => {
   const [weightError, setWeightError] = useState("");
 
   const [checkedTypes, setCheckedTypes] = useState({});
-  const [checkedTypesError, setCheckedTypesError] = useState("");
+  const [checkedTypesError, setCheckedTypesError] = useState(
+    "El pokemon debe tener 1 o 2 tipos"
+  );
 
   useEffect(() => {
     dispatch(fetchTypes());
@@ -45,6 +50,10 @@ const Form = () => {
   const onNameChange = (evento) => {
     const newName = evento.target.value;
     let error = ""; //esta vacio xq asumimos q no hay error
+
+    if (!newName) {
+      error = "El nombre es obligatorio";
+    }
 
     if (newName.length > 0) {
       if (newName.length < 5 || newName.length > 20) {
@@ -66,6 +75,11 @@ const Form = () => {
   const onImageChange = (evento) => {
     const newImage = evento.target.value;
     let error = "";
+
+    if (!newImage) {
+      error = "La imagen es obligatoria";
+    }
+
     if (newImage.length > 0) {
       if (!newImage.match(/(https?:\/\/.*\.(?:png|jpg))/i)) {
         error = "Debe ser una url a un png o jpg";
@@ -80,6 +94,10 @@ const Form = () => {
     const newHp = evento.target.value;
     let error = "";
 
+    if (!newHp) {
+      error = "Las vidas son obligatorias";
+    }
+
     if (newHp < 0) {
       error = "Las vidas no pueden ser negativas";
     }
@@ -92,6 +110,10 @@ const Form = () => {
     const newAttack = evento.target.value;
     let error = "";
 
+    if (!newAttack) {
+      error = "Los ataques son obligatorios";
+    }
+
     if (newAttack < 0) {
       error = "Los ataques no pueden ser negativos";
     }
@@ -103,6 +125,10 @@ const Form = () => {
   const onDefenseChange = (evento) => {
     const newDefense = evento.target.value;
     let error = "";
+
+    if (!newDefense) {
+      error = "Las defensas son obligatorias";
+    }
 
     if (newDefense < 0) {
       error = "Las defensas no pueden ser negativas";
@@ -159,8 +185,9 @@ const Form = () => {
     const checkeds = Object.entries(checkedTypes).filter(
       (item) => item[1]
     ).length;
-    if (checkeds !== 0 && (checkeds > 2 || checkeds < 1)) {
-      setCheckedTypesError("El pokemon debe tener 1 o 2 types");
+
+    if (checkeds === 0 || checkeds > 2) {
+      setCheckedTypesError("El pokemon debe tener 1 o 2 tipos");
     } else {
       setCheckedTypesError("");
     }
@@ -183,35 +210,6 @@ const Form = () => {
       checkedTypesError
     ) {
       error = true;
-    }
-
-    if (!name) {
-      error = true;
-      setNameError("El nombre es obligatorio");
-    }
-    if (!image) {
-      error = true;
-      setImageError("La imagen es obligatoria");
-    }
-    if (!hp) {
-      error = true;
-      setHpError("Las vidas son obligatorias");
-    }
-    if (!attack) {
-      error = true;
-      setAttackError("Los ataques son obligatorios");
-    }
-    if (!defense) {
-      error = true;
-      setDefenseError("Las defensas son obligatorias");
-    }
-
-    const checkeds = Object.entries(checkedTypes).filter(
-      (item) => item[1]
-    ).length;
-    if (checkeds === 0) {
-      error = true;
-      setCheckedTypesError("Debe elegir al menos un tipo");
     }
 
     if (error) {
